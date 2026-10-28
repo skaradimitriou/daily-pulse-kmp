@@ -31,7 +31,7 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.kotlix.coroutines.core)
+            implementation(libs.kotlinx.coroutines.core)
         }
 
         commonTest.dependencies {
