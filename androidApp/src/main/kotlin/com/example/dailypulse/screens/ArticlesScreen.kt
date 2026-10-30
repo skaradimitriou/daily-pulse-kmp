@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.example.dailypulse.articles.Article
+import com.example.dailypulse.articles.domain.model.Article
 import com.example.dailypulse.articles.ArticlesViewModel
 
 @Composable
@@ -86,7 +86,7 @@ fun ArticleItem(article: Article) {
         Text(text = article.description)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = article.title,
+            text = article.date,
             style = TextStyle(color = Color.Gray),
             modifier = Modifier.align(Alignment.End)
         )
@@ -96,7 +96,7 @@ fun ArticleItem(article: Article) {
 
 
 @Composable
-fun Loader(modifier: Modifier = Modifier) {
+fun Loader() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
