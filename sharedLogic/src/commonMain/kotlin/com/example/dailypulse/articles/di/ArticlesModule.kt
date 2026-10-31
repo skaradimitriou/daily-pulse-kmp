@@ -1,6 +1,8 @@
 package com.example.dailypulse.articles.di
 
 import com.example.dailypulse.articles.ArticlesViewModel
+import com.example.dailypulse.articles.data.ArticlesRepository
+import com.example.dailypulse.articles.data.local.ArticlesDataSource
 import com.example.dailypulse.articles.data.remote.ArticlesService
 import com.example.dailypulse.articles.domain.usecase.ArticlesUseCase
 import io.ktor.client.HttpClient
@@ -27,8 +29,19 @@ val articlesModule = module {
         ArticlesService(httpClient = get())
     }
 
+    single<ArticlesDataSource> {
+        ArticlesDataSource(database = get())
+    }
+
+    single<ArticlesRepository> {
+        ArticlesRepository(
+            dataSource = get(),
+            articlesService = get()
+        )
+    }
+
     single<ArticlesUseCase> {
-        ArticlesUseCase(service = get())
+        ArticlesUseCase(articlesRepository = get())
     }
 
     factory<ArticlesViewModel> {
