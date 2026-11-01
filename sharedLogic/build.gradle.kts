@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqlDelight)
+    id("co.touchlab.skie") version "0.10.16"
 }
 
 kotlin {
