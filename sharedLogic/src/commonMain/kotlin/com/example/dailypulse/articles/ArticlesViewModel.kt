@@ -17,13 +17,13 @@ class ArticlesViewModel(
 
     val articlesState: StateFlow<ArticlesState> = _articlesState.asStateFlow()
 
-    init {
-        getArticles()
-    }
-
-    private fun getArticles() {
+    fun getArticles(forceFetch: Boolean = false) {
         scope.launch {
-            val articles = articlesUseCase.invoke()
+            _articlesState.update {
+                ArticlesState(isLoading = true, articles = articlesState.value.articles)
+            }
+
+            val articles = articlesUseCase.invoke(forceFetch)
             _articlesState.update {
                 ArticlesState(articles = articles, isLoading = false)
             }

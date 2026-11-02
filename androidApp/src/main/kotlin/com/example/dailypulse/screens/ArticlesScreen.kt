@@ -13,7 +13,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,19 +37,25 @@ fun ArticlesScreen(
 ) {
     val articlesState by articlesViewModel.articlesState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        articlesViewModel.getArticles()
+    }
+
     Column {
         AppBar()
         when {
-            articlesState.isLoading -> {
-                Loader()
-            }
-
             articlesState.error != null -> {
                 ErrorMessage(articlesState.error!!)
             }
 
             else -> {
-                ArticlesList(articlesState.articles)
+                ArticlesList(
+                    articles = articlesState.articles,
+                    isRefreshing = articlesState.isLoading,
+                    onRefresh = {
+                        articlesViewModel.getArticles(true)
+                    }
+                )
             }
         }
     }
@@ -63,10 +71,15 @@ fun AppBar() {
 }
 
 @Composable
-fun ArticlesList(articles: List<Article>) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(articles) {
-            ArticleItem(it)
+fun ArticlesList(articles: List<Article>, isRefreshing: Boolean, onRefresh: () -> Unit) {
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh
+    ) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(articles) {
+                ArticleItem(it)
+            }
         }
     }
 }

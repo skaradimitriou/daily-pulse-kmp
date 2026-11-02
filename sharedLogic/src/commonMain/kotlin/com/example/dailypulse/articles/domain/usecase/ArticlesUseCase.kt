@@ -6,5 +6,7 @@ import com.example.dailypulse.articles.domain.model.Article
 
 class ArticlesUseCase(private val articlesRepository: ArticlesRepository) {
 
-    suspend fun invoke(): List<Article> = articlesRepository.getArticles().toArticles()
+    suspend fun invoke(forceFetch: Boolean): List<Article> =
+        articlesRepository.getArticles(forceFetch)
+            .toArticles()
 }
