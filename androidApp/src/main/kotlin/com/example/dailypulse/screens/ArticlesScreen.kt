@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.example.dailypulse.articles.ArticlesViewModel
 import com.example.dailypulse.articles.domain.model.Article
+import com.example.dailypulse.articles.presentation.ArticlesViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -36,10 +35,6 @@ fun ArticlesScreen(
     articlesViewModel: ArticlesViewModel = koinViewModel()
 ) {
     val articlesState by articlesViewModel.articlesState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(Unit) {
-        articlesViewModel.getArticles()
-    }
 
     Column {
         AppBar()

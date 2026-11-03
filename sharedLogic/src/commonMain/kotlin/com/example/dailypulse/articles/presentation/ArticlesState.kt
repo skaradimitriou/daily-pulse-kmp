@@ -1,4 +1,4 @@
-package com.example.dailypulse.articles
+package com.example.dailypulse.articles.presentation
 
 import com.example.dailypulse.articles.domain.model.Article
 

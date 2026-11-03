@@ -1,10 +1,10 @@
 package com.example.dailypulse.articles.di
 
-import com.example.dailypulse.articles.ArticlesViewModel
-import com.example.dailypulse.articles.data.ArticlesRepository
+import com.example.dailypulse.articles.data.ArticlesRepositoryImpl
 import com.example.dailypulse.articles.data.local.ArticlesDataSource
 import com.example.dailypulse.articles.data.remote.ArticlesService
-import com.example.dailypulse.articles.domain.usecase.ArticlesUseCase
+import com.example.dailypulse.articles.domain.repository.ArticlesRepository
+import com.example.dailypulse.articles.presentation.ArticlesViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
@@ -34,17 +34,13 @@ val articlesModule = module {
     }
 
     single<ArticlesRepository> {
-        ArticlesRepository(
+        ArticlesRepositoryImpl(
             dataSource = get(),
             articlesService = get()
         )
     }
 
-    single<ArticlesUseCase> {
-        ArticlesUseCase(articlesRepository = get())
-    }
-
     factory<ArticlesViewModel> {
-        ArticlesViewModel(articlesUseCase = get())
+        ArticlesViewModel(articlesRepository = get())
     }
 }

@@ -2,14 +2,16 @@ package com.example.dailypulse.articles.data
 
 import com.example.dailypulse.articles.data.local.ArticlesDataSource
 import com.example.dailypulse.articles.data.remote.ArticlesService
-import com.example.dailypulse.articles.data.remote.model.ArticleRaw
+import com.example.dailypulse.articles.data.remote.mapper.toArticles
+import com.example.dailypulse.articles.domain.repository.ArticlesRepository
+import com.example.dailypulse.articles.domain.model.Article
 
-class ArticlesRepository(
+internal class ArticlesRepositoryImpl(
     private val dataSource: ArticlesDataSource,
     private val articlesService: ArticlesService
-) {
+) : ArticlesRepository {
 
-    suspend fun getArticles(forceFetch: Boolean): List<ArticleRaw> {
+    override suspend fun getArticles(forceFetch: Boolean): List<Article> {
         if (forceFetch) {
             dataSource.clearArticles()
             return fetchArticles()
@@ -24,8 +26,8 @@ class ArticlesRepository(
         return articlesFromDb
     }
 
-    private suspend fun fetchArticles(): List<ArticleRaw> {
-        val fetchedArticles = articlesService.fetchArticles()
+    private suspend fun fetchArticles(): List<Article> {
+        val fetchedArticles = articlesService.fetchArticles().toArticles()
         dataSource.insertArticles(fetchedArticles)
         return fetchedArticles
     }

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArticlesResponseRaw(
+internal data class ArticlesResponseRaw(
     val status: String,
     @SerialName("totalResults")
     val results: Int,

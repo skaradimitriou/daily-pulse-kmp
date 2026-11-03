@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArticleRaw(
+internal data class ArticleRaw(
     val title: String,
     val description: String? = null,
     @SerialName("urlToImage")
