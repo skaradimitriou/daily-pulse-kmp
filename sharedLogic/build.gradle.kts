@@ -31,6 +31,7 @@ kotlin {
         withHostTest {
             isIncludeAndroidResources = true
         }
+
     }
     sourceSets {
         commonMain.dependencies {
