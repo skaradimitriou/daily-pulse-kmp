@@ -31,7 +31,8 @@ struct ArticlesScreen : View {
     
     var body: some View {
         VStack {
-            AppBar()
+            let title = "Articles"
+            AppBar(text: title )
             
             if viewModel.articlesState.isLoading {
                 Loader()
@@ -54,13 +55,6 @@ struct ArticlesScreen : View {
         .onAppear {
             self.viewModel.startObserving()
         }
-    }
-}
-
-struct AppBar : View {
-    
-    var body: some View {
-        Text("Articles")
     }
 }
 
