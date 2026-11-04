@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -39,8 +36,8 @@ fun ArticlesScreen(
     Column {
         AppBar()
         when {
-            articlesState.error != null -> {
-                ErrorMessage(articlesState.error!!)
+            articlesState.hasError -> {
+                ErrorMessage(articlesState.error.orEmpty())
             }
 
             else -> {
@@ -57,12 +54,8 @@ fun ArticlesScreen(
 }
 
 @Composable
-fun AppBar() {
-    TopAppBar(
-        title = {
-            Text(text = "Articles")
-        }
-    )
+private fun AppBar() {
+    TopAppBar(title = { Text(text = "Articles") })
 }
 
 @Composable
@@ -80,7 +73,7 @@ fun ArticlesList(articles: List<Article>, isRefreshing: Boolean, onRefresh: () -
 }
 
 @Composable
-fun ArticleItem(article: Article) {
+private fun ArticleItem(article: Article) {
     Column(modifier = Modifier.fillMaxWidth()) {
         AsyncImage(
             model = article.imageUrl,
@@ -103,23 +96,8 @@ fun ArticleItem(article: Article) {
     }
 }
 
-
 @Composable
-fun Loader() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.width(64.dp),
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            trackColor = MaterialTheme.colorScheme.secondary
-        )
-    }
-}
-
-@Composable
-fun ErrorMessage(message: String) {
+private fun ErrorMessage(message: String) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
