@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -28,12 +32,13 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SourcesScreen(
+    onBackClick: () -> Unit,
     viewModel: SourcesViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { AppBar() }
+        topBar = { AppBar(onBackClick) }
     ) { innerPadding ->
         when {
             state.hasError -> {
@@ -54,8 +59,20 @@ fun SourcesScreen(
 }
 
 @Composable
-private fun AppBar() {
-    TopAppBar(title = { Text(text = "Sources") })
+private fun AppBar(onBackClick: () -> Unit) {
+    TopAppBar(
+        title = { Text(text = "Sources") },
+        navigationIcon = {
+            IconButton(
+                onClick = onBackClick
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back"
+                )
+            }
+        }
+    )
 }
 
 @Composable

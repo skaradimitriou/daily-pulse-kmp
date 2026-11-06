@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Announcement
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -29,12 +33,13 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ArticlesScreen(
+    onSourcesClick: () -> Unit,
     articlesViewModel: ArticlesViewModel = koinViewModel()
 ) {
     val articlesState by articlesViewModel.articlesState.collectAsStateWithLifecycle()
 
     Column {
-        AppBar()
+        AppBar(onSourcesClick)
         when {
             articlesState.hasError -> {
                 ErrorMessage(articlesState.error.orEmpty())
@@ -54,8 +59,18 @@ fun ArticlesScreen(
 }
 
 @Composable
-private fun AppBar() {
-    TopAppBar(title = { Text(text = "Articles") })
+private fun AppBar(onSourcesClick: () -> Unit) {
+    TopAppBar(
+        title = { Text(text = "Articles") },
+        actions = {
+            IconButton(onClick = onSourcesClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Announcement,
+                    contentDescription = "Announcement"
+                )
+            }
+        }
+    )
 }
 
 @Composable
