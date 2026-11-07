@@ -9,14 +9,8 @@ struct iOSApp: App {
     }
     
     var body: some Scene {
-        
-        let articlesScreen = ArticlesScreen (viewModel: .init())
-        
         WindowGroup {
-            articlesScreen
-                .refreshable {
-                    articlesScreen.viewModel.articlesViewModel.getArticles(forceFetch: true)
-                }
+            ContentView()
         }
     }
 }

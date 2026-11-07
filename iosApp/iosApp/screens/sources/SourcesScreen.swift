@@ -44,7 +44,7 @@ struct SourcesScreen : View {
             
             if !viewModel.state.sources.isEmpty {
                 ScrollView {
-                    LazyVStack(: 10) {
+                    LazyVStack(spacing: 10) {
                         ForEach(viewModel.state.sources, id: \.self) { source in
                             SourceItem(source: source)
                         }
