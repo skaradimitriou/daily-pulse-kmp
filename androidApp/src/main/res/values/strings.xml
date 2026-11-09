@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">DailyPulse</string>
+
+    <!-- Articles -->
+    <string name="articles_screen_title">Articles</string>
+    <string name="empty_article_description">Click to find out more</string>
+
+    <!-- Sources -->
+    <string name="sources_screen_title">Sources</string>
+
 </resources>

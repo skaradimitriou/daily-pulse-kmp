@@ -1,4 +1,4 @@
-package com.example.dailypulse
+package com.example.dailypulse.util
 
 import android.app.Application
 import com.example.dailypulse.articles.di.articlesModule
