@@ -3,8 +3,8 @@ package com.example.dailypulse.articles.data
 import com.example.dailypulse.articles.data.local.ArticlesDataSource
 import com.example.dailypulse.articles.data.remote.ArticlesService
 import com.example.dailypulse.articles.data.remote.mapper.toArticles
-import com.example.dailypulse.articles.domain.repository.ArticlesRepository
 import com.example.dailypulse.articles.domain.model.Article
+import com.example.dailypulse.articles.domain.repository.ArticlesRepository
 
 internal class ArticlesRepositoryImpl(
     private val dataSource: ArticlesDataSource,
