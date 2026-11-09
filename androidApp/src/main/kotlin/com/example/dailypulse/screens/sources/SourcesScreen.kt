@@ -3,6 +3,7 @@ package com.example.dailypulse.screens.sources
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,18 +21,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.dailypulse.R
 import com.example.dailypulse.sources.domain.model.Source
+import com.example.dailypulse.sources.presentation.SourcesUiState
 import com.example.dailypulse.sources.presentation.SourcesViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SourcesScreen(
+internal fun SourcesScreen(
     onBackClick: () -> Unit,
     viewModel: SourcesViewModel = koinViewModel()
 ) {
@@ -40,20 +46,28 @@ fun SourcesScreen(
     Scaffold(
         topBar = { AppBar(onBackClick) }
     ) { innerPadding ->
-        when {
-            state.hasError -> {
-                ErrorMessage(
-                    modifier = Modifier.padding(innerPadding),
-                    message = state.error.orEmpty()
-                )
-            }
+        SourcesContent(state = state, innerPadding = innerPadding)
+    }
+}
 
-            else -> {
-                SourcesList(
-                    modifier = Modifier.padding(innerPadding),
-                    sources = state.sources
-                )
-            }
+@Composable
+internal fun SourcesContent(
+    state: SourcesUiState,
+    innerPadding: PaddingValues = PaddingValues()
+) {
+    when {
+        state.hasError -> {
+            ErrorMessage(
+                modifier = Modifier.padding(innerPadding),
+                message = state.error.orEmpty()
+            )
+        }
+
+        else -> {
+            SourcesList(
+                modifier = Modifier.padding(innerPadding),
+                sources = state.sources
+            )
         }
     }
 }
@@ -61,7 +75,7 @@ fun SourcesScreen(
 @Composable
 private fun AppBar(onBackClick: () -> Unit) {
     TopAppBar(
-        title = { Text(text = "Sources") },
+        title = { Text(text = stringResource(R.string.sources_screen_title)) },
         navigationIcon = {
             IconButton(
                 onClick = onBackClick
@@ -76,7 +90,7 @@ private fun AppBar(onBackClick: () -> Unit) {
 }
 
 @Composable
-fun SourcesList(sources: List<Source>, modifier: Modifier = Modifier) {
+private fun SourcesList(sources: List<Source>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(items = sources, key = { it.id }) {
             SourceItem(it)
@@ -89,7 +103,7 @@ private fun SourceItem(source: Source) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
@@ -116,4 +130,12 @@ private fun ErrorMessage(message: String, modifier: Modifier = Modifier) {
             style = TextStyle(fontSize = 28.sp, textAlign = TextAlign.Center)
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SourcesScreenPreview(
+    @PreviewParameter(SourcesPreviewProvider::class) state: SourcesUiState
+) {
+    SourcesContent(state = state)
 }
