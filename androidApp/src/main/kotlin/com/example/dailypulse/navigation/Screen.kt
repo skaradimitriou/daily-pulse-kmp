@@ -6,4 +6,6 @@ internal sealed interface Screen : NavKey {
 
     data object Articles : Screen
     data object Sources : Screen
+
+    data object Platform : Screen
 }

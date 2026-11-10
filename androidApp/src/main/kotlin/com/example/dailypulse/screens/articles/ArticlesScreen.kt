@@ -10,7 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Comment
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Devices
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -41,12 +42,13 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun ArticlesScreen(
     onSourcesClick: () -> Unit,
+    onPlatformClick: () -> Unit,
     articlesViewModel: ArticlesViewModel = koinViewModel()
 ) {
     val state by articlesViewModel.articlesState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { AppBar(onSourcesClick) },
+        topBar = { AppBar(onSourcesClick, onPlatformClick) },
         content = { innerPadding ->
             ArticlesContent(
                 state = state,
@@ -83,7 +85,10 @@ private fun ArticlesContent(
 }
 
 @Composable
-private fun AppBar(onSourcesClick: () -> Unit) {
+private fun AppBar(
+    onSourcesClick: () -> Unit,
+    onPlatformClick: () -> Unit
+) {
     TopAppBar(
         title = { Text(text = stringResource(R.string.articles_screen_title)) },
         actions = {
@@ -91,8 +96,17 @@ private fun AppBar(onSourcesClick: () -> Unit) {
                 onClick = onSourcesClick
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Comment,
-                    contentDescription = "Comment"
+                    imageVector = Icons.AutoMirrored.Filled.List,
+                    contentDescription = stringResource(R.string.sources_screen_title)
+                )
+            }
+
+            IconButton(
+                onClick = onPlatformClick
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Devices,
+                    contentDescription = stringResource(R.string.platform_screen_title)
                 )
             }
         }

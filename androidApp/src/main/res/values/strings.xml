@@ -8,4 +8,11 @@
     <!-- Sources -->
     <string name="sources_screen_title">Sources</string>
 
+    <!-- Platform -->
+    <string name="platform_screen_title">About Device</string>
+    <string name="platform_os_name_item_label">Operating System</string>
+    <string name="platform_os_version_item_label">Version</string>
+    <string name="platform_device_item_label">Device</string>
+    <string name="platform_density_item_label">Screen Density</string>
+
 </resources>
