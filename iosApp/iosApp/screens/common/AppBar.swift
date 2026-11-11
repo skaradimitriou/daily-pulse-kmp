@@ -6,5 +6,7 @@ struct AppBar : View {
     
     var body: some View {
         Text(text)
+            .font(.title2)
+            .fontWeight(.bold)
     }
 }

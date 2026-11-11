@@ -7,7 +7,7 @@ struct ContentView: View {
     @State private var shouldOpenSources = false
     
     var body: some View {
-        let platformInfo = PlatformInfoScreen()
+        let platformInfo = PlatformScreen(viewModel: .init())
         let articlesScreen = ArticlesScreen (viewModel: .init())
         let sourcesScreen = SourcesScreen(viewModel: .init())
         

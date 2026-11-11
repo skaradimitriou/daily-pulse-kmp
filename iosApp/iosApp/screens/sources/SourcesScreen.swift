@@ -31,8 +31,7 @@ struct SourcesScreen : View {
     
     var body: some View {
         VStack {
-            let title = "Sources"
-            AppBar(text: title )
+            AppBar(text: String(localized: "sources_screen_title"))
             
             if viewModel.state.isLoading {
                 Loader()
@@ -69,6 +68,7 @@ struct SourceItem : View {
                 .fontWeight(.bold)
             Text(source.subtitle)
             Text(source.languageWithCountry).frame(maxWidth: .infinity, alignment: .trailing).foregroundStyle(.gray)
-        }
+        }.padding(.horizontal, 16)
+            .padding(.vertical, 8)
     }
 }

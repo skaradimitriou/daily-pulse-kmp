@@ -2,6 +2,7 @@ package com.example.dailypulse.di
 
 import com.example.dailypulse.articles.di.articlesModule
 import com.example.dailypulse.articles.presentation.ArticlesViewModel
+import com.example.dailypulse.platform.di.platformModule
 import com.example.dailypulse.platform.presentation.PlatformViewModel
 import com.example.dailypulse.sources.di.sourcesModule
 import com.example.dailypulse.sources.presentation.SourcesViewModel
@@ -11,7 +12,7 @@ import org.koin.core.context.startKoin
 
 fun initKoin() {
 
-    val modules = articlesModule + databaseModule + sourcesModule
+    val modules = articlesModule + databaseModule + sourcesModule + platformModule
 
     startKoin {
         modules(modules)
